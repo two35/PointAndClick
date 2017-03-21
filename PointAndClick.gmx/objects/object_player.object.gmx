@@ -35,6 +35,71 @@ moving = false;
 
 x_destiny = 0;
 y_destiny = 0;
+
+walkSpeed = 5;
+
+/////////////////////////////
+// Start of set up the main view
+/////////////////////////////
+/*view_enabled = true;
+view_visible[0] = true;
+view_object[0] = object_player;
+//where the view will start to capture images
+view_xview[0] = 0;
+view_yview[0] = 0;
+//how much of the room should be displayed
+//for mini map it should show the whole room
+view_hview[0] = 500;
+view_wview[0] = 500;
+//the position of the view in the screen
+view_xport[0] = 0
+view_yport[0] = 0;
+//the dimension of the view on the screen
+view_wport[0] = 500; //704
+view_hport[0] = 500; //576 
+
+view_hborder[0] = room_width / 2;
+view_vborder[0] = room_height / 2;
+
+view_vspeed[0] = -1;
+view_hspeed[0] = -1;
+*/
+//////////////////////////////////////////
+///End of set up the mini map view
+///////////////////////////////////////////
+
+/////////////////////////////
+// Start of set up the mini map view
+/////////////////////////////
+/*view_visible[1] = true;
+//where the view will start to capture images
+view_xview[1] = 0;
+view_yview[1] = 0;
+//how much of the room should be displayed
+//for mini map it should show the whole room
+view_hview[1] = room_height;
+view_wview[1] = room_width;
+//the position of the view in the screen
+view_xport[1] = 500
+view_yport[1] = 10;
+//the dimension of the view on the screen
+view_wport[1] = 500 + 20;
+view_hport[1] = 185;
+//////////////////////////////////////////
+///End of set up the mini map view
+///////////////////////////////////////////
+*/
+
+
+
+
+
+
+
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -58,11 +123,13 @@ y_destiny = 0;
           <argument>
             <kind>1</kind>
             <string>
+//code for mouse click movement
+
 //if the player is not moving 
 //have the player face the mouse pointer
 //and check if the user clicked the mouse
 //so that it can start moving
-if(!moving)
+/*if(!moving)
 {
     //calculate the distance between the player coordinates and the mouse coordinates
     y_diff = mouse_y - y;
@@ -108,6 +175,50 @@ if(moving)
         moving = false;
     }
 }
+*/
+
+
+//moving with keys
+
+speed = 0;
+
+/*switch(keyboard_key)
+{
+
+    case vk_up: vspeed = -walkSpeed; break;
+    case vk_down: vspeed = walkSpeed; break;
+    case vk_left: hspeed = -walkSpeed; break;
+    case vk_right: hspeed = walkSpeed; break;
+
+}*/
+
+if(keyboard_check(vk_up))
+{
+
+    vspeed = -walkSpeed;
+
+}
+
+if(keyboard_check(vk_down))
+{
+
+    vspeed = walkSpeed;
+
+}
+
+if(keyboard_check(vk_left))
+{
+
+    hspeed = -walkSpeed;
+
+}
+
+if(keyboard_check(vk_right))
+{
+
+    hspeed = walkSpeed;
+
+}
 
 
 
@@ -123,6 +234,54 @@ if(moving)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="object_obstacle">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>x = xprevious;
+
+y = yprevious;
 </string>
           </argument>
         </arguments>
@@ -145,9 +304,41 @@ if(moving)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-//draw the sprite for the object
-draw_sprite_ext(sprite_index,-1,x,y,1,1,direction,c_white,1);
+            <string>//draw the sprite for the character for the main view
+if(view_current == 0)
+{
+    //draw the sprite for the object
+    draw_sprite_ext(sprite_index,-1,x,y,1,1,direction,c_white,1);
+      
+}
+
+if(view_current == 1)
+{
+
+     //draw the hub for inventory and mini map
+    draw_rectangle_colour(view_xview[1] ,view_yview[1],
+        view_xview[1] + view_wview[1],view_hview[1],c_dkgray,c_dkgray,c_dkgray,c_dkgray,0);
+        
+    
+    draw_rectangle_colour(view_xview[1]+5,view_yview[1]+5,
+        view_xview[1] + view_wview[1]-5,view_hview[1]-5,c_ltgray,c_ltgray,c_ltgray,c_ltgray,0);
+        
+    draw_rectangle_colour(view_xview[1]+10,view_yview[1]+10,
+        view_xview[1] + 450 ,view_hview[1]- 10,c_white,c_white,c_white,c_white,0);
+
+}
+
+if(view_current == 2)
+{
+
+      
+    //draw the sprite for the object
+    draw_circle_colour(x,y,20,c_white,c_green,false);
+
+}
+
+
+
 
 
 </string>
