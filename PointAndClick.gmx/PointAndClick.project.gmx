@@ -8,12 +8,19 @@
   <sprites name="sprites">
     <sprite>sprites\sprite_player</sprite>
     <sprite>sprites\sprite_obstacle</sprite>
+    <sprite>sprites\sprite_Pinkpiece</sprite>
+    <sprite>sprites\sprite_Yellowpiece</sprite>
+    <sprite>sprites\sprite_LtBluepiece</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
     <object>objects\object_player</object>
     <object>objects\object_obstacle</object>
+    <object>objects\object_collectable</object>
+    <object>objects\object_Pinkpiece</object>
+    <object>objects\object_Yellowpiece</object>
+    <object>objects\object_LtBluepiece</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_game</room>

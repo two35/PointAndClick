@@ -26,18 +26,19 @@
           <argument>
             <kind>1</kind>
             <string>
+//the sprite that will be drawn for the character
 sprite_index = sprite_player;
-
-direction = 0;
-
-//boolean to know if the character is moving
-moving = false;
-
-x_destiny = 0;
-y_destiny = 0;
 
 walkSpeed = 5;
 
+//this will store the pieces the user obtains
+inventory = ds_list_create();
+
+////////////////////////////////////////////////////////////
+/////
+/////           TESTING VIEWS WITH CODE
+/////
+////////////////////////////////////////////////////////////
 /////////////////////////////
 // Start of set up the main view
 /////////////////////////////
@@ -312,22 +313,33 @@ if(view_current == 0)
       
 }
 
+//the view for the inventory
 if(view_current == 1)
 {
 
      //draw the hub for inventory and mini map
     draw_rectangle_colour(view_xview[1] ,view_yview[1],
-        view_xview[1] + view_wview[1],view_hview[1],c_dkgray,c_dkgray,c_dkgray,c_dkgray,0);
-        
+        view_xview[1] + view_wview[1],view_hview[1],c_dkgray,c_dkgray,c_dkgray,c_dkgray,0);  
     
     draw_rectangle_colour(view_xview[1]+5,view_yview[1]+5,
         view_xview[1] + view_wview[1]-5,view_hview[1]-5,c_ltgray,c_ltgray,c_ltgray,c_ltgray,0);
         
     draw_rectangle_colour(view_xview[1]+10,view_yview[1]+10,
         view_xview[1] + 450 ,view_hview[1]- 10,c_white,c_white,c_white,c_white,0);
+        
+    //draw the pieces in the inventory
+    for(i = 0; i &lt; ds_list_size(inventory); i++)
+    {
+            
+        pieceImage = ds_list_find_value(inventory,i);
+    
+        draw_sprite_ext(pieceImage,-1, view_xview[1] + (15 * (i+1) + (32*i) ),view_yview[1]+15,2,2,0,c_white,1);
+    
+    }
 
 }
 
+//the view for the mini map
 if(view_current == 2)
 {
 
@@ -340,6 +352,31 @@ if(view_current == 2)
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="9" enumb="32">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+ds_list_delete(inventory,0);
 
 </string>
           </argument>
