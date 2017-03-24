@@ -26,11 +26,26 @@
           <argument>
             <kind>1</kind>
             <string>//when it collides with the player
+//this code will be executed by the player and can access variable
+//of the player object
 with(other)
 {
 
+    inventorySize = ds_list_size(inventory);
+    
+    //store the sprite
     ds_list_add(inventory,other.sprite_index);
-
+    
+    //view_xview[1] + (15 * (i+1) + (16 * inventScale *i) ), view_yview[1]+15
+    xPos = view_xview[1] + (15 * (inventorySize+1) + (16 * inventScale * inventorySize) )
+    
+    ds_list_add(inventoryXPos, xPos);
+    
+    yPos = view_yview[1]+15;
+    ds_list_add(inventoryYPos, yPos);
+    
+    ds_list_add(inventoryMouse, false);
+    
 }
 
 

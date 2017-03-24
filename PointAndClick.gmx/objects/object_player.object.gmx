@@ -33,6 +33,16 @@ walkSpeed = 5;
 
 //this will store the pieces the user obtains
 inventory = ds_list_create();
+//store the x postion of the pieces
+inventoryXPos = ds_list_create();
+//store the y position of the pieces
+inventoryYPos = ds_list_create();
+//store if the mouse is over the piece in the inventory
+inventoryMouse = ds_list_create();
+
+//the scale factor to use when drawing inventory on the screen
+inventScale = 3;
+
 
 ////////////////////////////////////////////////////////////
 /////
@@ -123,105 +133,41 @@ view_hport[1] = 185;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
-//code for mouse click movement
-
-//if the player is not moving 
-//have the player face the mouse pointer
-//and check if the user clicked the mouse
-//so that it can start moving
-/*if(!moving)
-{
-    //calculate the distance between the player coordinates and the mouse coordinates
-    y_diff = mouse_y - y;
-    y_diff *= -1;
-    x_diff = mouse_x - x;
-    
-    //calculate the direction the plaYer should be facing based on the
-    //position of the mouse
-    angle = arctan2(y_diff,x_diff); //returns angle in radians
-    //convert radians to degrees
-    angle = angle * 180;
-    angle = angle / pi;
-    //set the direction to be drawn in the draw event
-    direction =  angle;
-    
-    //check if the user clicked the left button
-    if(mouse_check_button_pressed(mb_left))
-    {
-        x_destiny = mouse_x;
-        y_destiny = mouse_y;
-        
-        //the player will start to move
-        moving = true;
-    }
-    
-}
-
-//if the player is moving 
-if(moving)
-{
-    //move towards a the mouse coordinates while avoiding a specified object
-    //                         xgoal  ,   ygoal  , stepsize, obj
-    mp_potential_step_object(x_destiny, y_destiny,    8    , object_obstacle);
-    
-    //the absolute value of the difference between the player x and the destination x
-    xDiffAbs = abs(x_destiny - x);
-    
-    //the absolute value of the difference between the player y and the destination y
-    yDiffAbs = abs(y_destiny - y);
-    
-    if((xDiffAbs &lt;= sprite_width/2 + 8) &amp;&amp; (yDiffAbs &lt;= sprite_height/2 + 8))
-    {
-        moving = false;
-    }
-}
-*/
-
-
-//moving with keys
+            <string>//moving with keys
 
 speed = 0;
 
-/*switch(keyboard_key)
-{
-
-    case vk_up: vspeed = -walkSpeed; break;
-    case vk_down: vspeed = walkSpeed; break;
-    case vk_left: hspeed = -walkSpeed; break;
-    case vk_right: hspeed = walkSpeed; break;
-
-}*/
-
-if(keyboard_check(vk_up))
+if(keyboard_check(vk_up)
+|| keyboard_check(ord('W')) )
 {
 
     vspeed = -walkSpeed;
 
 }
 
-if(keyboard_check(vk_down))
+if(keyboard_check(vk_down)
+|| keyboard_check(ord('S')) )
 {
 
     vspeed = walkSpeed;
 
 }
 
-if(keyboard_check(vk_left))
+if(keyboard_check(vk_left)
+|| keyboard_check(ord('A')) )
 {
 
     hspeed = -walkSpeed;
 
 }
 
-if(keyboard_check(vk_right))
+if(keyboard_check(vk_right)
+|| keyboard_check(ord('D')) )
 {
 
     hspeed = walkSpeed;
 
 }
-
-
 
 
 
@@ -332,8 +278,37 @@ if(view_current == 1)
     {
             
         pieceImage = ds_list_find_value(inventory,i);
+        pieceX = ds_list_find_value(inventoryXPos,i);
+        pieceY = ds_list_find_value(inventoryYPos,i);
+        
+        
+        /*draw_sprite_ext(pieceImage, -1 , view_xview[1] + (15 * (i+1) + (16 * inventScale *i) ),
+                        view_yview[1]+15,inventScale,inventsScale,0,c_white,1);*/
+                        
+        draw_sprite_ext(pieceImage, -1, pieceX, pieceY, inventScale,inventScale,0,c_white,1);
     
-        draw_sprite_ext(pieceImage,-1, view_xview[1] + (15 * (i+1) + (32*i) ),view_yview[1]+15,2,2,0,c_white,1);
+    }
+
+    //check if the mouse is over any of the invetory items
+    //check for the x postions of the pieces in the inventory    
+    for(i = 0; i &lt; ds_list_size(inventoryXPos); i++)
+    {
+    
+        lowerX = ds_list_find_value(inventoryXPos,i)
+        upperX = lowerX + (16 * inventScale)
+        
+        lowerY = ds_list_find_value(inventoryYPos,i)
+        upperY = lowerY + (16 * inventScale)
+        
+        if( (mouse_x &gt;= lowerX) &amp;&amp; (mouse_x &lt;= upperX) &amp;&amp; (mouse_y &gt;= lowerY) &amp;&amp; (mouse_y &lt;= upperY))
+        {
+        
+           draw_roundrect_colour(lowerX,lowerY,upperX,upperY,c_red,c_green,true) //ds_list_replace(inventoryMouse,i,true);
+        }
+        else
+        {
+            ds_list_replace(inventoryMouse,i,false);
+        }
     
     }
 
@@ -342,12 +317,24 @@ if(view_current == 1)
 //the view for the mini map
 if(view_current == 2)
 {
-
       
     //draw the sprite for the object
     draw_circle_colour(x,y,20,c_white,c_green,false);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -376,6 +363,7 @@ if(view_current == 2)
           <argument>
             <kind>1</kind>
             <string>
+
 ds_list_delete(inventory,0);
 
 </string>
