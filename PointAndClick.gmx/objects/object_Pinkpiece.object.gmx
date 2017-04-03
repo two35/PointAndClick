@@ -25,7 +25,7 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>sprite_index = sprite_Pinkpiece;
+            <string>sprite_index = sprite_ram;
 </string>
           </argument>
         </arguments>

@@ -31,6 +31,12 @@ sprite_index = sprite_player;
 
 walkSpeed = 5;
 
+//boolean to control if the inventory should be displayed
+displayInvent = false;
+
+//boolean to control if the map should be displayed
+mapView = false;
+
 //this will store the pieces the user obtains
 inventory = ds_list_create();
 //store the x postion of the pieces
@@ -44,62 +50,6 @@ inventoryMouse = ds_list_create();
 inventScale = 3;
 
 
-////////////////////////////////////////////////////////////
-/////
-/////           TESTING VIEWS WITH CODE
-/////
-////////////////////////////////////////////////////////////
-/////////////////////////////
-// Start of set up the main view
-/////////////////////////////
-/*view_enabled = true;
-view_visible[0] = true;
-view_object[0] = object_player;
-//where the view will start to capture images
-view_xview[0] = 0;
-view_yview[0] = 0;
-//how much of the room should be displayed
-//for mini map it should show the whole room
-view_hview[0] = 500;
-view_wview[0] = 500;
-//the position of the view in the screen
-view_xport[0] = 0
-view_yport[0] = 0;
-//the dimension of the view on the screen
-view_wport[0] = 500; //704
-view_hport[0] = 500; //576 
-
-view_hborder[0] = room_width / 2;
-view_vborder[0] = room_height / 2;
-
-view_vspeed[0] = -1;
-view_hspeed[0] = -1;
-*/
-//////////////////////////////////////////
-///End of set up the mini map view
-///////////////////////////////////////////
-
-/////////////////////////////
-// Start of set up the mini map view
-/////////////////////////////
-/*view_visible[1] = true;
-//where the view will start to capture images
-view_xview[1] = 0;
-view_yview[1] = 0;
-//how much of the room should be displayed
-//for mini map it should show the whole room
-view_hview[1] = room_height;
-view_wview[1] = room_width;
-//the position of the view in the screen
-view_xport[1] = 500
-view_yport[1] = 10;
-//the dimension of the view on the screen
-view_wport[1] = 500 + 20;
-view_hport[1] = 185;
-//////////////////////////////////////////
-///End of set up the mini map view
-///////////////////////////////////////////
-*/
 
 
 
@@ -111,6 +61,47 @@ view_hport[1] = 185;
 
 
 
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="1">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if( (mouse_x &gt;= view_xview[1] + 15 &amp;&amp; mouse_x &lt;= view_xview[1] + 15 + 120) 
+    &amp;&amp; ( mouse_y &gt;= view_hview[1] - 90 &amp;&amp; mouse_y &lt;= view_hview[1] - 90 + 50)
+    &amp;&amp; mouse_check_button_pressed(mb_left))
+{
+
+    mapView = true;
+
+    view_visible[2] = true;
+
+}
+else
+    if(mouse_check_button_pressed(mb_left))
+    {
+        mapView = false;
+
+        view_visible[2] = false;
+    
+    }
 </string>
           </argument>
         </arguments>
@@ -137,37 +128,47 @@ view_hport[1] = 185;
 
 speed = 0;
 
-if(keyboard_check(vk_up)
-|| keyboard_check(ord('W')) )
+//allow the player to move only if the map is not displayed
+if(!mapView)
 {
 
-    vspeed = -walkSpeed;
+    if(keyboard_check(vk_up)
+    || keyboard_check(ord('W')) )
+    {
+    
+        vspeed = -walkSpeed;
+    
+    }
+    
+    if(keyboard_check(vk_down)
+    || keyboard_check(ord('S')) )
+    {
+    
+        vspeed = walkSpeed;
+    
+    }
+    
+    if(keyboard_check(vk_left)
+    || keyboard_check(ord('A')) )
+    {
+    
+        hspeed = -walkSpeed;
+    
+    }
+    
+    if(keyboard_check(vk_right)
+    || keyboard_check(ord('D')) )
+    {
+    
+        hspeed = walkSpeed;
+    
+    }
 
 }
 
-if(keyboard_check(vk_down)
-|| keyboard_check(ord('S')) )
-{
 
-    vspeed = walkSpeed;
 
-}
-
-if(keyboard_check(vk_left)
-|| keyboard_check(ord('A')) )
-{
-
-    hspeed = -walkSpeed;
-
-}
-
-if(keyboard_check(vk_right)
-|| keyboard_check(ord('D')) )
-{
-
-    hspeed = walkSpeed;
-
-}
+    
 
 
 
@@ -263,15 +264,18 @@ if(view_current == 0)
 if(view_current == 1)
 {
 
-     //draw the hub for inventory and mini map
+     //draw the hub for inventory
     draw_rectangle_colour(view_xview[1] ,view_yview[1],
         view_xview[1] + view_wview[1],view_hview[1],c_dkgray,c_dkgray,c_dkgray,c_dkgray,0);  
-    
     draw_rectangle_colour(view_xview[1]+5,view_yview[1]+5,
-        view_xview[1] + view_wview[1]-5,view_hview[1]-5,c_ltgray,c_ltgray,c_ltgray,c_ltgray,0);
-        
+        view_xview[1] + view_wview[1]-5,view_hview[1]-5,c_ltgray,c_ltgray,c_ltgray,c_ltgray,0);   
     draw_rectangle_colour(view_xview[1]+10,view_yview[1]+10,
-        view_xview[1] + 450 ,view_hview[1]- 10,c_white,c_white,c_white,c_white,0);
+        view_xview[1] + 190 , view_hview[1]- 100,c_white,c_white,c_white,c_white,0);
+        
+    draw_button(view_xview[1] + 15, view_hview[1] - 90, view_xview[1] + 15 + 120 , view_hview[1] - 90 + 50,!mouse_check_button(mb_left));
+            
+    draw_text_ext_transformed_colour(view_xview[1] + 35, view_hview[1] - 85, "MAP", 5, 200 , 2.5 , 2.5, 0 , c_red, c_red, c_red, c_red, 1);   
+    
         
     //draw the pieces in the inventory
     for(i = 0; i &lt; ds_list_size(inventory); i++)
@@ -303,11 +307,7 @@ if(view_current == 1)
         if( (mouse_x &gt;= lowerX) &amp;&amp; (mouse_x &lt;= upperX) &amp;&amp; (mouse_y &gt;= lowerY) &amp;&amp; (mouse_y &lt;= upperY))
         {
         
-           draw_roundrect_colour(lowerX,lowerY,upperX,upperY,c_red,c_green,true) //ds_list_replace(inventoryMouse,i,true);
-        }
-        else
-        {
-            ds_list_replace(inventoryMouse,i,false);
+           draw_roundrect_colour(lowerX,lowerY,upperX,upperY,c_red,c_green,true);
         }
     
     }
@@ -362,9 +362,29 @@ if(view_current == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>//toggle the value of displayInvent
+displayInvent = !displayInvent
 
-ds_list_delete(inventory,0);
+//display the inventory view
+if(displayInvent)
+{
+    view_visible[1] = true;
+    
+    //this will shift the game view to the left
+    //and keep the aspect ratio of the screen
+    view_wport[0] = 704 - 200;
+    view_wview[0] = 704 - 200;
+}
+else //hide inventory view
+{
+    view_visible[1] = false;
+    
+    //return game view to original settings
+    view_wport[0] = 704;
+    view_wview[0] = 704;
+    
+}
+
 
 </string>
           </argument>

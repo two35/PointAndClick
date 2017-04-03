@@ -11,6 +11,8 @@
     <sprite>sprites\sprite_Pinkpiece</sprite>
     <sprite>sprites\sprite_Yellowpiece</sprite>
     <sprite>sprites\sprite_LtBluepiece</sprite>
+    <sprite>sprites\sprite_ramOg</sprite>
+    <sprite>sprites\sprite_ram</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
