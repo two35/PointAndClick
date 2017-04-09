@@ -8,6 +8,30 @@
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
+    <event eventtype="0" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>image_index = 1;
+image_speed = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="object_player">
       <action>
         <libid>1</libid>
@@ -30,21 +54,10 @@
 //of the player object
 with(other)
 {
-
-    inventorySize = ds_list_size(inventory);
-    
-    //store the sprite
-    ds_list_add(inventory,other.sprite_index);
-    
-    //view_xview[1] + (15 * (i+1) + (16 * inventScale *i) ), view_yview[1]+15
-    xPos = view_xview[1] + (15 * (inventorySize+1) + (16 * inventScale * inventorySize) )
-    
-    ds_list_add(inventoryXPos, xPos);
-    
-    yPos = view_yview[1]+15;
-    ds_list_add(inventoryYPos, yPos);
-    
-    ds_list_add(inventoryMouse, false);
+   
+   index = ds_list_find_index(inventory,other.sprite_index);
+   
+   ds_list_replace(inventoryHave,index,true);
     
 }
 
@@ -80,7 +93,7 @@ instance_destroy();
 if(view_current == 0)
 {
 
-    draw_sprite_ext(sprite_index,-1,x,y,1,1,0,c_white,1);
+    draw_sprite_ext(sprite_index,-1,x,y,2,2,0,c_white,1);
 
 }
 </string>

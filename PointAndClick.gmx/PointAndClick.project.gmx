@@ -6,27 +6,53 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprite_player</sprite>
     <sprite>sprites\sprite_obstacle</sprite>
-    <sprite>sprites\sprite_Pinkpiece</sprite>
-    <sprite>sprites\sprite_Yellowpiece</sprite>
-    <sprite>sprites\sprite_LtBluepiece</sprite>
     <sprite>sprites\sprite_ramOg</sprite>
-    <sprite>sprites\sprite_ram</sprite>
+    <sprites name="Items">
+      <sprite>sprites\sprite_heatSink</sprite>
+      <sprite>sprites\sprite_graphicsCard</sprite>
+      <sprite>sprites\sprite_hardDrive</sprite>
+      <sprite>sprites\sprite_cpu</sprite>
+      <sprite>sprites\sprite_ram</sprite>
+      <sprite>sprites\sprite_fan</sprite>
+      <sprite>sprites\sprite_powerSupply</sprite>
+      <sprite>sprites\sprite_wifiCard</sprite>
+    </sprites>
+    <sprites name="player">
+      <sprite>sprites\sprite_player</sprite>
+      <sprite>sprites\sprite_playerMovingSide</sprite>
+      <sprite>sprites\sprite_playerMovingDown</sprite>
+      <sprite>sprites\sprite_playerMovingUp</sprite>
+    </sprites>
+    <sprite>sprites\sprite_logo</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
+  <scripts name="scripts">
+    <script>scripts\script_getDescription.gml</script>
+  </scripts>
   <objects name="objects">
     <object>objects\object_player</object>
     <object>objects\object_obstacle</object>
     <object>objects\object_collectable</object>
-    <object>objects\object_Pinkpiece</object>
-    <object>objects\object_Yellowpiece</object>
-    <object>objects\object_LtBluepiece</object>
+    <object>objects\object_hardDrive</object>
+    <object>objects\object_heatSink</object>
+    <object>objects\object_graphicsCard</object>
+    <object>objects\object_cpu</object>
+    <object>objects\object_ram</object>
+    <object>objects\object_fan</object>
+    <object>objects\object_powerSupply</object>
+    <object>objects\object_wifiCard</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_game</room>
   </rooms>
+  <constants number="4">
+    <constant name="FACE_LEFT">-1</constant>
+    <constant name="FACE_RIGHT">1</constant>
+    <constant name="FACE_UP">2</constant>
+    <constant name="FACE_DOWN">3</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

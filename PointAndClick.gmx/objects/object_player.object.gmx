@@ -37,17 +37,45 @@ displayInvent = false;
 //boolean to control if the map should be displayed
 mapView = false;
 
+//the items that the player must collect
+items[0] = sprite_cpu;
+items[1] = sprite_ram;
+items[2] = sprite_graphicsCard;
+items[3] = sprite_hardDrive;
+items[4] = sprite_heatSink;
+items[5] = sprite_fan;
+items[6] = sprite_powerSupply;
+items[7] = sprite_wifiCard;
+
 //this will store the pieces the user obtains
 inventory = ds_list_create();
 //store the x postion of the pieces
 inventoryXPos = ds_list_create();
 //store the y position of the pieces
 inventoryYPos = ds_list_create();
-//store if the mouse is over the piece in the inventory
-inventoryMouse = ds_list_create();
+//store if the item is in the inventory
+inventoryHave = ds_list_create();
 
 //the scale factor to use when drawing inventory on the screen
 inventScale = 3;
+
+//set which way the player is facing
+facing = FACE_DOWN;
+
+
+//populate the inventory
+for(i = 0; i &lt; array_length_1d(items); i++)
+{
+
+    xPos = 20 + (90 * (i mod 2));
+    yPos = 20 + (60 * (i div 2));
+
+    ds_list_add(inventory,items[i]);
+    ds_list_add(inventoryXPos,xPos);
+    ds_list_add(inventoryYPos,yPos);
+    ds_list_add(inventoryHave,false);
+
+}
 
 
 
@@ -84,7 +112,27 @@ inventScale = 3;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if( (mouse_x &gt;= view_xview[1] + 15 &amp;&amp; mouse_x &lt;= view_xview[1] + 15 + 120) 
+            <string>
+//if the playr is not moving 
+//set the image to the idle animation
+//facing the correct direction
+if(speed == 0)
+{
+
+    sprite_index = sprite_player;
+    
+    switch(facing)
+    {
+        case FACE_LEFT:
+        case FACE_RIGHT: image_index = 2; break;
+        case FACE_DOWN: image_index = 0; break;
+        case FACE_UP:   image_index = 1; break;
+    }
+}
+
+//check if the player clicked the mouse button
+//to display the map
+if( (mouse_x &gt;= view_xview[1] + 15 &amp;&amp; mouse_x &lt;= view_xview[1] + 15 + 120) 
     &amp;&amp; ( mouse_y &gt;= view_hview[1] - 90 &amp;&amp; mouse_y &lt;= view_hview[1] - 90 + 50)
     &amp;&amp; mouse_check_button_pressed(mb_left))
 {
@@ -94,7 +142,7 @@ inventScale = 3;
     view_visible[2] = true;
 
 }
-else
+else //the useer clicks anyone of the room the map will close
     if(mouse_check_button_pressed(mb_left))
     {
         mapView = false;
@@ -102,6 +150,17 @@ else
         view_visible[2] = false;
     
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </string>
           </argument>
         </arguments>
@@ -124,9 +183,7 @@ else
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//moving with keys
-
-speed = 0;
+            <string>speed = 0;
 
 //allow the player to move only if the map is not displayed
 if(!mapView)
@@ -135,7 +192,9 @@ if(!mapView)
     if(keyboard_check(vk_up)
     || keyboard_check(ord('W')) )
     {
-    
+        facing = FACE_UP;
+        sprite_index = sprite_playerMovingUp;
+        image_speed = .5;
         vspeed = -walkSpeed;
     
     }
@@ -143,7 +202,9 @@ if(!mapView)
     if(keyboard_check(vk_down)
     || keyboard_check(ord('S')) )
     {
-    
+        facing = FACE_DOWN;
+        sprite_index = sprite_playerMovingDown;
+        image_speed = .5;
         vspeed = walkSpeed;
     
     }
@@ -151,7 +212,9 @@ if(!mapView)
     if(keyboard_check(vk_left)
     || keyboard_check(ord('A')) )
     {
-    
+        facing = FACE_LEFT;
+        sprite_index = sprite_playerMovingSide;
+        image_speed = .5;
         hspeed = -walkSpeed;
     
     }
@@ -159,7 +222,9 @@ if(!mapView)
     if(keyboard_check(vk_right)
     || keyboard_check(ord('D')) )
     {
-    
+        facing = FACE_RIGHT;
+        sprite_index = sprite_playerMovingSide;
+        image_speed = .5;
         hspeed = walkSpeed;
     
     }
@@ -255,8 +320,17 @@ y = yprevious;
             <string>//draw the sprite for the character for the main view
 if(view_current == 0)
 {
-    //draw the sprite for the object
-    draw_sprite_ext(sprite_index,-1,x,y,1,1,direction,c_white,1);
+
+    if(facing == FACE_LEFT || facing == FACE_RIGHT )
+    {
+        //draw the sprite for the object
+        draw_sprite_ext(sprite_index,-1,x,y,facing * 2,1 * 2,0,c_white,1);
+    }
+    else
+    {
+        //draw the sprite for the object
+        draw_sprite_ext(sprite_index,-1,x,y,1 * 2,1 * 2,0,c_white,1);
+    }
       
 }
 
@@ -271,9 +345,10 @@ if(view_current == 1)
         view_xview[1] + view_wview[1]-5,view_hview[1]-5,c_ltgray,c_ltgray,c_ltgray,c_ltgray,0);   
     draw_rectangle_colour(view_xview[1]+10,view_yview[1]+10,
         view_xview[1] + 190 , view_hview[1]- 100,c_white,c_white,c_white,c_white,0);
-        
+    
+    //draw the map button    
     draw_button(view_xview[1] + 15, view_hview[1] - 90, view_xview[1] + 15 + 120 , view_hview[1] - 90 + 50,!mouse_check_button(mb_left));
-            
+           
     draw_text_ext_transformed_colour(view_xview[1] + 35, view_hview[1] - 85, "MAP", 5, 200 , 2.5 , 2.5, 0 , c_red, c_red, c_red, c_red, 1);   
     
         
@@ -289,7 +364,7 @@ if(view_current == 1)
         /*draw_sprite_ext(pieceImage, -1 , view_xview[1] + (15 * (i+1) + (16 * inventScale *i) ),
                         view_yview[1]+15,inventScale,inventsScale,0,c_white,1);*/
                         
-        draw_sprite_ext(pieceImage, -1, pieceX, pieceY, inventScale,inventScale,0,c_white,1);
+        draw_sprite_ext(pieceImage, ds_list_find_value(inventoryHave,i), pieceX, pieceY, inventScale,inventScale,0,c_white,1);
     
     }
 
@@ -306,8 +381,17 @@ if(view_current == 1)
         
         if( (mouse_x &gt;= lowerX) &amp;&amp; (mouse_x &lt;= upperX) &amp;&amp; (mouse_y &gt;= lowerY) &amp;&amp; (mouse_y &lt;= upperY))
         {
-        
            draw_roundrect_colour(lowerX,lowerY,upperX,upperY,c_red,c_green,true);
+           
+           if(mouse_check_button_pressed(mb_left) &amp;&amp; ds_list_find_value(inventoryHave,i) == true)
+           {
+           
+            description = script_getDescription(ds_list_find_value(inventory,i))
+           
+            show_message(description);
+           
+           }
+           
         }
     
     }
@@ -317,9 +401,11 @@ if(view_current == 1)
 //the view for the mini map
 if(view_current == 2)
 {
-      
+ 
+     
     //draw the sprite for the object
-    draw_circle_colour(x,y,20,c_white,c_green,false);
+    draw_sprite_ext(sprite_logo,-1,x,y,1,1,0,c_white,1);
+    //draw_circle_colour(x,y,20,c_white,c_green,false);
 
 }
 
@@ -362,7 +448,8 @@ if(view_current == 2)
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>//toggle the value of displayInvent
+            <string>
+//toggle the value of displayInvent
 displayInvent = !displayInvent
 
 //display the inventory view
