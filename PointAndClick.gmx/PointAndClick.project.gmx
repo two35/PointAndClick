@@ -13,6 +13,7 @@
     <sprite>sprites\sprite_LtBluepiece</sprite>
     <sprite>sprites\sprite_ramOg</sprite>
     <sprite>sprites\sprite_ram</sprite>
+    <sprite>sprites\sprite_InfoBox</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -23,6 +24,7 @@
     <object>objects\object_Pinkpiece</object>
     <object>objects\object_Yellowpiece</object>
     <object>objects\object_LtBluepiece</object>
+    <object>objects\object_Components</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\room_game</room>
