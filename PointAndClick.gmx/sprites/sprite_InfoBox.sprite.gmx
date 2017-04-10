@@ -8,18 +8,20 @@
   <sepmasks>0</sepmasks>
   <bboxmode>0</bboxmode>
   <bbox_left>0</bbox_left>
-  <bbox_right>15</bbox_right>
+  <bbox_right>499</bbox_right>
   <bbox_top>0</bbox_top>
-  <bbox_bottom>15</bbox_bottom>
+  <bbox_bottom>499</bbox_bottom>
   <HTile>0</HTile>
   <VTile>0</VTile>
   <TextureGroups>
     <TextureGroup0>0</TextureGroup0>
   </TextureGroups>
   <For3D>0</For3D>
-  <width>16</width>
-  <height>16</height>
+  <width>500</width>
+  <height>500</height>
   <frames>
-    <frame index="0">images\sprite_Pinkpiece_0.png</frame>
+    <frame index="0">images\sprite_InfoBox_0.png</frame>
+    <frame index="1">images\sprite_InfoBox_1.png</frame>
+    <frame index="2">images\sprite_InfoBox_2.png</frame>
   </frames>
 </sprite>

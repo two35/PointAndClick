@@ -6,25 +6,23 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\sprite_obstacle</sprite>
-    <sprite>sprites\sprite_ramOg</sprite>
-    <sprites name="Items">
-      <sprite>sprites\sprite_heatSink</sprite>
-      <sprite>sprites\sprite_graphicsCard</sprite>
-      <sprite>sprites\sprite_hardDrive</sprite>
-      <sprite>sprites\sprite_cpu</sprite>
-      <sprite>sprites\sprite_ram</sprite>
-      <sprite>sprites\sprite_fan</sprite>
-      <sprite>sprites\sprite_powerSupply</sprite>
-      <sprite>sprites\sprite_wifiCard</sprite>
-    </sprites>
-    <sprites name="player">
-      <sprite>sprites\sprite_player</sprite>
-      <sprite>sprites\sprite_playerMovingSide</sprite>
-      <sprite>sprites\sprite_playerMovingDown</sprite>
-      <sprite>sprites\sprite_playerMovingUp</sprite>
-    </sprites>
+    <sprite>sprites\sprite_Components</sprite>
+    <sprite>sprites\sprite_cpu</sprite>
+    <sprite>sprites\sprite_fan</sprite>
+    <sprite>sprites\sprite_graphicsCard</sprite>
+    <sprite>sprites\sprite_hardDrive</sprite>
+    <sprite>sprites\sprite_heatSink</sprite>
+    <sprite>sprites\sprite_InfoBox</sprite>
     <sprite>sprites\sprite_logo</sprite>
+    <sprite>sprites\sprite_obstacle</sprite>
+    <sprite>sprites\sprite_player</sprite>
+    <sprite>sprites\sprite_playerMovingDown</sprite>
+    <sprite>sprites\sprite_playerMovingSide</sprite>
+    <sprite>sprites\sprite_playerMovingUp</sprite>
+    <sprite>sprites\sprite_powerSupply</sprite>
+    <sprite>sprites\sprite_ram</sprite>
+    <sprite>sprites\sprite_ramOg</sprite>
+    <sprite>sprites\sprite_wifiCard</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -32,16 +30,18 @@
     <script>scripts\script_getDescription.gml</script>
   </scripts>
   <objects name="objects">
-    <object>objects\object_player</object>
-    <object>objects\object_obstacle</object>
     <object>objects\object_collectable</object>
+    <object>objects\object_Components</object>
+    <object>objects\object_cpu</object>
+    <object>objects\object_fan</object>
+    <object>objects\object_graphicsCard</object>
     <object>objects\object_hardDrive</object>
     <object>objects\object_heatSink</object>
-    <object>objects\object_graphicsCard</object>
-    <object>objects\object_cpu</object>
-    <object>objects\object_ram</object>
-    <object>objects\object_fan</object>
+    <object>objects\object_LtBluepiece</object>
+    <object>objects\object_obstacle</object>
+    <object>objects\object_player</object>
     <object>objects\object_powerSupply</object>
+    <object>objects\object_ram</object>
     <object>objects\object_wifiCard</object>
   </objects>
   <rooms name="rooms">
